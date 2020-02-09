@@ -2,8 +2,11 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import UbuntuPackage from './UbuntuPackage'
 
+const apiurl = window.location.href.includes('localhost') 
+    ? 'http://localhost:8081/api/' 
+    : 'https://ubuntu-package-viewer.herokuapp.com/api/'
+
 const App = () => {
-  const apiurl = 'https://ubuntu-package-viewer.herokuapp.com/api/'
   const [packages, setPackages] = useState([])
   const [selectedPackage, setSelectedPackage] = useState('')
   const [packData, setPackData] = useState(null)
@@ -64,19 +67,17 @@ const App = () => {
       : (
         <div >
           <h1>Packages:</h1>
-          { packages
-            .map(p => {
-            return (
-              <p 
-                className="listitem"
-                id={p} 
-                key={`name-${p}`} 
-                onClick={handleClick}
-              >
-                {p}
-              </p>
-              )
-          })}
+          { packages.length > 0 
+            ? packages
+              .map(p => {
+              return (
+                <p 
+                  className="listitem"
+                  id={p} 
+                  key={`name-${p}`} 
+                  onClick={handleClick}
+                >{p}</p> )})
+            : <p>loading data from the api...</p>}
         </div>
       )}
     </div>
