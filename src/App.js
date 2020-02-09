@@ -28,18 +28,18 @@ const App = () => {
   }
 
   const fetchSelectedPackage = async (pack) => {
-    await axios.get(`${apiurl}package/${pack}`).then(res => {
-      setPackData(res.data)
-      if(!res.data.packageName){
+    await axios.get(`${apiurl}package/${pack}`)
+      .then(res => {
+        setPackData(res.data)
+      })
+      .catch(error => {        
         backToMain()
         setNotFoundError(true)
         setTimeout(() => {
           setNotFoundError(false)
-        },5000)
-        return;
-      }
-      setLoaded(true)
-    })
+        },5000)          
+      })
+    setLoaded(true)    
   }
 
   const handleClick = (event) => {
